@@ -25,3 +25,16 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=grafana
     volumes:
       - ${PATH_TO_GRAFANA}:/var/lib/grafana
+    
+  jellyfin:
+    image: ghcr.io/linuxserver/jellyfin
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./jellyfin:/config
+      - ${PATH_TO_MEDIA}:/media
+    ports:
+      - 8096:8096
+    restart: unless-stopped
