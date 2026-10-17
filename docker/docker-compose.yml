@@ -9,12 +9,12 @@ services:
       - 9090:9090
     restart: unless-stopped
     volumes:
-    - ${PATH_TO_PROMETHEUS}:/prometheus
-    - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     extra_hosts:
       - host.docker.internal:host-gateway
   
-  grafana:
+  grafana:  
     image: grafana/grafana
     container_name: grafana
     ports:
@@ -33,8 +33,12 @@ services:
       - PUID=1000
       - PGID=1000
     volumes:
-      - ./jellyfin:/config
-      - ${PATH_TO_MEDIA}:/media
+      - ${PATH_TO_MEDIA}:/media:ro
+      - ${PATH_TO_JELLYFIN_APPDATA}:/config
+      - ${JELLYFIN_CACHE}:/cache
     ports:
       - 8096:8096
     restart: unless-stopped
+
+volumes:
+  prometheus-data:
