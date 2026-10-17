@@ -21,10 +21,10 @@ services:
       - 3000:3000
     restart: unless-stopped
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=grafana
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
     volumes:
-      - ${PATH_TO_GRAFANA}:/var/lib/grafana
+      - grafana-data:/var/lib/grafana
     
   jellyfin:
     image: ghcr.io/linuxserver/jellyfin
@@ -42,3 +42,4 @@ services:
 
 volumes:
   prometheus-data:
+  grafana-data:
