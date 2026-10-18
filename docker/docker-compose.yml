@@ -89,7 +89,6 @@ services:
     volumes:
       - ${PATH_TO_QBITTORRENT_APPDATA}:/config
       - ${PATH_TO_QBITTORRENT_CACHE}:/cache
-      - ./qbittorrent:/config
       - ${PATH_TO_DOWNLOADS}:/downloads
     network_mode: service:gluetun
     restart: unless-stopped
