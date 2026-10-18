@@ -1,4 +1,18 @@
 services:
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+      - '--collector.disable-defaults=false'
+      - '--no-collector.os'
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - '/:/host:ro,rslave'
+    ports:
+      - '9100:9100'
+
   prometheus:
     image: prom/prometheus
     container_name: prometheus
