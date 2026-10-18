@@ -4,7 +4,6 @@ services:
     container_name: node_exporter
     command:
       - '--path.rootfs=/host'
-      - '--collector.disable-defaults=false'
       - '--no-collector.os'
     pid: host
     restart: unless-stopped
