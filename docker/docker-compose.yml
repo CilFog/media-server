@@ -135,6 +135,17 @@ services:
       - 7878:7878
     restart: unless-stopped
 
+  prowlarr:
+      image: lscr.io/linuxserver/prowlarr:develop
+      container_name: prowlarr
+      environment:
+        - PUID=1000
+        - PGID=1000
+        - TZ=America/New_York
+      volumes:
+        - ${PATH_TO_APPDATA_PROWLARR}:/config
+      network_mode: service:gluetun
+      restart: unless-stopped
 
 volumes:
   prometheus-data:
