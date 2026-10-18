@@ -93,6 +93,18 @@ services:
     network_mode: service:gluetun
     restart: unless-stopped
 
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    network_mode: service:gluetun
+    volumes:
+      - ${PATH_TO_APPDATA_FLARESOLVERR}:/config
+    restart: unless-stopped
+
 volumes:
   prometheus-data:
   grafana-data:
