@@ -4,7 +4,6 @@ services:
     container_name: node_exporter
     command:
       - '--path.rootfs=/host'
-      - '--collector.disable-defaults=false'
       - '--no-collector.os'
     pid: host
     restart: unless-stopped
@@ -52,6 +51,32 @@ services:
       - ${JELLYFIN_CACHE}:/cache
     ports:
       - 8096:8096
+    restart: unless-stopped
+  
+  gluetun:
+    image: qmcgaw/gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 8888:8888/tcp # HTTP proxy
+      - 8388:8388/tcp # Shadowsocks
+      - 8388:8388/udp # Shadowsocks
+      - 8080:8080 # qbittorrent
+      - 9696:9696 # prowlarr
+      - 8191:8191 # flaresolverr
+    volumes:
+      - ./gluetun:/gluetun
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VPN_SERVICE_PROVIDER=mullvad
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+      - WIREGUARD_ADDRESSES=${WIREGUARD_ADDRESSES}
+      - SERVER_CITIES=Copenhagen
+      - TZ=Europe/Copenhagen
     restart: unless-stopped
 
 volumes:
