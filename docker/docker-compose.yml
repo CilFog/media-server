@@ -145,8 +145,6 @@ services:
       volumes:
         - ${PATH_TO_APPDATA_PROWLARR}:/config
       network_mode: service:gluetun
-      ports:
-        - 9696:9696
       restart: unless-stopped
 
 volumes:
